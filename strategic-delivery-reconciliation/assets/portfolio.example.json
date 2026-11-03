@@ -1,0 +1,122 @@
+{
+  "schema_version": 1,
+  "objectives": [
+    {
+      "id": "OBJ-01",
+      "outcome": "让虚构服务站点具备可验证的询盘流程",
+      "success_condition": "生产询盘路径可用，并由业务负责人验收",
+      "decision_source": "synthetic-example",
+      "required_dimensions": [
+        "code",
+        "live",
+        "business"
+      ]
+    }
+  ],
+  "packages": [
+    {
+      "id": "PKG-01",
+      "objective_id": "OBJ-01",
+      "deliverable": "询盘表单与校验",
+      "owner": "示例开发负责人",
+      "integration_owner": "示例集成人",
+      "edit_scope": [
+        "src/contact/"
+      ],
+      "due_date": "2026-01-15",
+      "dependencies": [],
+      "criteria": [
+        {
+          "id": "C-01",
+          "dimension": "code",
+          "description": "对应提交的输入校验测试通过",
+          "expected_version": "synthetic-commit-a",
+          "expected_environment": "test"
+        }
+      ],
+      "claim": "complete",
+      "dimensions": {
+        "code": {
+          "applicable": true
+        },
+        "live": {
+          "applicable": false,
+          "reason": "此维度由关联交付包覆盖，本包只负责明确列出的成果"
+        },
+        "business": {
+          "applicable": false,
+          "reason": "此维度由关联交付包覆盖，本包只负责明确列出的成果"
+        }
+      }
+    },
+    {
+      "id": "PKG-02",
+      "objective_id": "OBJ-01",
+      "deliverable": "发布并完成业务验收",
+      "owner": "示例运营负责人",
+      "integration_owner": "示例集成人",
+      "edit_scope": [
+        "deployment/"
+      ],
+      "due_date": "2026-01-16",
+      "dependencies": [
+        {
+          "package_id": "PKG-01",
+          "dimension": "code",
+          "affects_dimension": "live"
+        }
+      ],
+      "criteria": [
+        {
+          "id": "C-02",
+          "dimension": "live",
+          "description": "目标环境的真实询盘路径通过测试",
+          "expected_version": "synthetic-commit-a",
+          "expected_environment": "production",
+          "freshness_hours": 24
+        },
+        {
+          "id": "C-03",
+          "dimension": "business",
+          "description": "业务负责人确认收到测试询盘并验收",
+          "expected_version": "synthetic-commit-a",
+          "expected_environment": "business-review"
+        }
+      ],
+      "claim": "in_progress",
+      "dimensions": {
+        "code": {
+          "applicable": false,
+          "reason": "此维度由关联交付包覆盖，本包只负责明确列出的成果"
+        },
+        "live": {
+          "applicable": true
+        },
+        "business": {
+          "applicable": true
+        }
+      }
+    }
+  ],
+  "evidence": [
+    {
+      "package_id": "PKG-01",
+      "criterion_id": "C-01",
+      "status": "passed",
+      "observed_at": "2026-01-15T09:00:00Z",
+      "source": "https://example.com/evidence/test-run-1",
+      "version": "synthetic-commit-a",
+      "environment": "test"
+    },
+    {
+      "package_id": "PKG-02",
+      "criterion_id": "C-02",
+      "status": "passed",
+      "observed_at": "2026-01-15T10:00:00Z",
+      "source": "https://example.com/evidence/deploy-1",
+      "version": "synthetic-commit-a",
+      "environment": "production",
+      "expires_at": "2026-01-16T10:00:00Z"
+    }
+  ]
+}
